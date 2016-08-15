@@ -66,10 +66,10 @@ abstract class InstallCommand extends Command
                 $name = $file->getExtension();
             }
 
-            $filepath = base_path(). $path . $name;
+            $filePath = base_path(). $path . $name;
 
-            if($this->putFile($filepath, $file)) {
-                $this->info('Copied: ' . $filepath);
+            if($this->putFile($filePath, $file)) {
+                $this->info('Copied: ' . $filePath);
             }
         }
     }
@@ -84,10 +84,10 @@ abstract class InstallCommand extends Command
     {
         foreach($files as $file)
         {
-            $filepath = base_path(). $path . $file->getRelativePath() . $this->parseFilename($file);
+            $filePath = base_path(). $path . $file->getRelativePath() . $this->parseFilename($file);
 
-            if($this->putFile($filepath, $file)) {
-                $this->info('Copied: ' . $filepath);
+            if($this->putFile($filePath, $file)) {
+                $this->info('Copied: ' . $filePath);
             }
         }
     }
