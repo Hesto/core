@@ -51,30 +51,6 @@ abstract class InstallCommand extends Command
     abstract function fire();
 
     /**
-     * Copy files method.
-     *
-     * @param $path
-     * @param $files
-     */
-    protected function copyFiles($path, $files)
-    {
-        foreach($files as $file)
-        {
-            $name = $file->getFileName();
-
-            if(empty($name)) {
-                $name = $file->getExtension();
-            }
-
-            $filePath = base_path(). $path . $name;
-
-            if($this->putFile($filePath, $file)) {
-                $this->info('Copied: ' . $filePath);
-            }
-        }
-    }
-
-    /**
      * Install files method.
      *
      * @param $path
@@ -84,17 +60,50 @@ abstract class InstallCommand extends Command
     {
         foreach($files as $file)
         {
-            $filePath = base_path(). $path . $file->getRelativePath() . $this->parseFilename($file);
+            $filePath = base_path(). $path . $file->getRelativePath() . '/' . $this->parseFilename($file);
 
             if($this->putFile($filePath, $file)) {
-                $this->info('Copied: ' . $filePath);
+                $this->getInfoMessage($filePath);
             }
         }
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     protected function parseFilename($file)
     {
-        return '/' . $file->getBasename($file->getExtension()) . $this->getExtension($file);
+        return $this->getFileName($file) . $this->getExtension($file);
+    }
+
+    /**
+     * @param $file
+     * @return mixed
+     */
+    protected function getFileName($file)
+    {
+        return $this->getFileRealName($file);
+    }
+
+    /**
+     * @param $file
+     * @return mixed
+     */
+    protected function getFileRealName($file)
+    {
+        return $file->getBasename($file->getExtension());
+    }
+
+    /**
+     * Get file extension.
+     *
+     * @param $file
+     * @return bool
+     */
+    protected function getExtension($file)
+    {
+        return $file->getExtension();
     }
 
     /**
@@ -120,6 +129,11 @@ abstract class InstallCommand extends Command
         return true;
     }
 
+    protected function getInfoMessage($filePath)
+    {
+        return $this->info('Copied: ' . $filePath);
+    }
+
     /**
      * Determine if the class already exists.
      *
@@ -142,31 +156,6 @@ abstract class InstallCommand extends Command
         if (! $this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
         }
-    }
-
-    /**
-     * Get file extension.
-     *
-     * @param $file
-     * @return bool
-     */
-    protected function getExtension($file)
-    {
-        if($this->replaceExtensions()) {
-            return $this->replaceExtensions();
-        }
-
-        return $file->getExtension();
-    }
-
-    /**
-     * Replace extension.
-     *
-     * @return bool
-     */
-    public function replaceExtensions()
-    {
-        return false;
     }
 
     /**
