@@ -2,11 +2,14 @@
 
 namespace Hesto\Core\Commands;
 
+use Hesto\Core\Traits\CanReplaceKeywords;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 abstract class TemplateGeneratorCommand extends InstallCommand
 {
+    use CanReplaceKeywords;
+
     /**
      * The filesystem instance.
      *
@@ -126,40 +129,6 @@ abstract class TemplateGeneratorCommand extends InstallCommand
         $this->replaceNames($template);
 
         return $template;
-    }
-
-    /**
-     * Replace names with pattern.
-     *
-     * @param $stub
-     * @return $this
-     */
-    public function replaceNames(&$template)
-    {
-        $name = $this->getNameInput();
-
-        $plural = [
-            '{{pluralCamel}}',
-            '{{pluralSlug}}',
-            '{{pluralSnake}}',
-        ];
-
-        $singular = [
-            '{{singularCamel}}',
-            '{{singularSlug}}',
-            '{{singularSnake}}',
-        ];
-
-        $replace = [
-            camel_case($name),
-            str_slug($name),
-            snake_case($name),
-        ];
-
-        $template = str_replace($plural, $replace, $template);
-        $template = str_replace($singular, $replace, $template);
-
-        return $this;
     }
 
     /**

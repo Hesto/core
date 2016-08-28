@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputOption;
 
 abstract class ReplaceContentCommand extends InstallCommand
 {
+    use CanReplaceKeywords;
+
     /**
      * The filesystem instance.
      *

@@ -13,7 +13,8 @@
     },    
     "autoload": {
         "classmap": [
-            "src/commands"
+            "src/commands",
+            "src/traits"
         ],
         "psr-4": {
             "Hesto\\Core\\": "src/"
