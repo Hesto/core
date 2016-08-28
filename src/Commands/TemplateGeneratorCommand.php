@@ -136,7 +136,7 @@ abstract class TemplateGeneratorCommand extends InstallCommand
      *
      * @return array
      */
-    protected function getArguments()
+    public function getArguments()
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the class'],
@@ -148,7 +148,7 @@ abstract class TemplateGeneratorCommand extends InstallCommand
      *
      * @return array
      */
-    protected function getOptions()
+    public function getOptions()
     {
         return [
             ['template', 't', InputOption::VALUE_OPTIONAL, 'The template to generate', 'default'],

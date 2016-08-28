@@ -87,11 +87,33 @@ abstract class ReplaceContentCommand extends InstallCommand
     }
 
     /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        return trim($this->argument('name'));
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    public function getArguments()
+    {
+        return [
+            ['name', InputArgument::REQUIRED, 'The name of the class'],
+        ];
+    }
+
+    /**
      * Get the console command options.
      *
      * @return array
      */
-    protected function getOptions()
+    public function getOptions()
     {
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Force override existing files'],
