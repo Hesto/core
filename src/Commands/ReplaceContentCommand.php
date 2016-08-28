@@ -5,6 +5,7 @@ namespace Hesto\Core\Commands;
 use Hesto\Core\Traits\CanReplaceKeywords;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 
 abstract class ReplaceContentCommand extends InstallCommand
