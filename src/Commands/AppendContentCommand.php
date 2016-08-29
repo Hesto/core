@@ -38,7 +38,7 @@ abstract class AppendContentCommand extends InstallCommand
      *
      * @return string
      */
-    abstract function getFiles();
+    abstract function getSettings();
 
     /**
      * Execute the console command.
@@ -47,13 +47,13 @@ abstract class AppendContentCommand extends InstallCommand
      */
     public function fire()
     {
-        $files = $this->getFiles();
+        $settings = $this->getSettings();
 
-        foreach ($files as $file) {
-            $path = $file['path'];
+        foreach ($settings as $setting) {
+            $path = $setting['path'];
             $fullPath = base_path() . $path;
 
-            if($this->putContent($fullPath, $this->compileContent($fullPath, $file))) {
+            if($this->putContent($fullPath, $this->compileContent($fullPath, $setting))) {
                 $this->getInfoMessage($fullPath);
             }
         }
@@ -67,17 +67,17 @@ abstract class AppendContentCommand extends InstallCommand
      * @param $content
      * @return mixed
      */
-    protected function compileContent($path, $file)
+    protected function compileContent($path, $setting)
     {
-        $string = $this->replaceNames($this->files->get($file['append']));
+        $string = $this->replaceNames($this->files->get($setting['append']));
 
-        if($file['prefix']) {
-            $stub = $string . $file['search'];
+        if($setting['prefix']) {
+            $stub = $string . $setting['search'];
         } else {
-            $stub = $file['search'] . $string;
+            $stub = $setting['search'] . $string;
         }
 
-        $content = str_replace($file['search'], $stub, $this->files->get($path));
+        $content = str_replace($setting['search'], $stub, $this->files->get($path));
 
         return $content;
     }
