@@ -53,20 +53,8 @@ abstract class AppendContentCommand extends InstallCommand
             $path = $setting['path'];
             $fullPath = base_path() . $path;
 
-            if($setting['put']) {
-                if ($this->putContent($fullPath, $this->compileContent($fullPath, $setting))) {
-                    $this->getInfoMessage($fullPath);
-                }
-
-                continue;
-            }
-
-            if($setting['append']) {
-                if ($this->appendContent($fullPath, $this->compileContent($fullPath, $setting))) {
-                    $this->getInfoMessage($fullPath);
-                }
-
-                continue;
+            if ($this->putContent($fullPath, $this->compileContent($fullPath, $setting))) {
+                $this->getInfoMessage($fullPath);
             }
 
         }
