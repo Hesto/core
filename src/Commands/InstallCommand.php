@@ -130,6 +130,29 @@ abstract class InstallCommand extends Command
     }
 
     /**
+     * Append given file in path
+     *
+     * @param $path
+     * @param $file
+     * @return bool
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    protected function appendFile($path, $file)
+    {
+        if($this->alreadyExists($path) && !$this->option('force')) {
+            $this->error($path . ' already exists!');
+
+            return false;
+        }
+
+        $this->makeDirectory($path);
+
+        $this->files->append($path, $this->compile($this->files->get($file->getPathname())));
+
+        return true;
+    }
+
+    /**
      * Put given content in path
      *
      * @param $path

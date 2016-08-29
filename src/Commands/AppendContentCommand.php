@@ -53,9 +53,18 @@ abstract class AppendContentCommand extends InstallCommand
             $path = $setting['path'];
             $fullPath = base_path() . $path;
 
-            if($this->putContent($fullPath, $this->compileContent($fullPath, $setting))) {
+            if($setting['put']) {
+                if ($this->putContent($fullPath, $this->compileContent($fullPath, $setting))) {
+                    $this->getInfoMessage($fullPath);
+                }
+
+                continue;
+            }
+
+            if ($this->appendContent($fullPath, $this->compileContent($fullPath, $setting))) {
                 $this->getInfoMessage($fullPath);
             }
+
         }
 
         return true;
@@ -69,15 +78,17 @@ abstract class AppendContentCommand extends InstallCommand
      */
     protected function compileContent($path, $setting)
     {
-        $string = $this->replaceNames($this->files->get($setting['append']));
+        $content = $this->replaceNames($this->files->get($setting['append']));
 
-        if($setting['prefix']) {
-            $stub = $string . $setting['search'];
-        } else {
-            $stub = $setting['search'] . $string;
+        if($setting['search']) {
+            if ($setting['prefix']) {
+                $stub = $content . $setting['search'];
+            } else {
+                $stub = $setting['search'] . $content;
+            }
+
+            $content = str_replace($setting['search'], $stub, $this->files->get($path));
         }
-
-        $content = str_replace($setting['search'], $stub, $this->files->get($path));
 
         return $content;
     }
