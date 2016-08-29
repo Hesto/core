@@ -77,7 +77,11 @@ abstract class ReplaceContentCommand extends InstallCommand
      */
     protected function compile($content)
     {
-        $content = str_replace($this->searchFor(), $this->replaceWith(), $content);
+        $string = $this->replaceNames($this->files->get($this->replaceWith()));
+
+        $stub = $this->searchFor() . $string;
+
+        $content = str_replace($this->searchFor(), $stub, $content);
 
         return $content;
     }
