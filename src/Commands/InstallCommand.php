@@ -129,6 +129,29 @@ abstract class InstallCommand extends Command
         return true;
     }
 
+    /**
+     * Put given content in path
+     *
+     * @param $path
+     * @param $content
+     * @return bool
+     * @internal param $file
+     */
+    protected function putContent($path, $content)
+    {
+        if($this->alreadyExists($path) && !$this->option('force')) {
+            $this->error($path . ' already exists!');
+
+            return false;
+        }
+
+        $this->makeDirectory($path);
+
+        $this->files->put($path, $content);
+
+        return true;
+    }
+
     protected function getInfoMessage($filePath)
     {
         return $this->info('Copied: ' . $filePath);

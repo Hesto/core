@@ -38,11 +38,7 @@ abstract class ReplaceContentCommand extends InstallCommand
      *
      * @return string
      */
-    abstract function getPath();
-
-    abstract function searchFor();
-
-    abstract function replaceWith();
+    abstract function getFiles();
 
     /**
      * Execute the console command.
@@ -51,19 +47,15 @@ abstract class ReplaceContentCommand extends InstallCommand
      */
     public function fire()
     {
-        $path = $this->getPath();
-        $fullPath = base_path() . $path;
+        $files = $this->getFiles();
 
-        if($this->files->isDirectory($path)) {
-            $this->installFiles($path, $this->files->allFiles($fullPath));
+        foreach ($files as $file) {
+            $path = $file['path'];
+            $fullPath = base_path() . $path;
 
-            return true;
-        }
-
-        $file = new \SplFileInfo($fullPath);
-
-        if($this->putFile($fullPath, $file)) {
-            $this->getInfoMessage($fullPath);
+            if($this->putContent($path, $this->compileContent($path, $file))) {
+                $this->getInfoMessage($fullPath);
+            }
         }
 
         return true;
@@ -75,13 +67,13 @@ abstract class ReplaceContentCommand extends InstallCommand
      * @param $content
      * @return mixed
      */
-    protected function compile($content)
+    protected function compileContent($content, $file)
     {
-        $string = $this->replaceNames($this->files->get($this->replaceWith()));
+        $string = $this->replaceNames($this->files->get($file['replace']));
 
-        $stub = $this->searchFor() . $string;
+        $stub = $file['search'] . $string;
 
-        $content = str_replace($this->searchFor(), $stub, $content);
+        $content = str_replace($file['search'], $stub, $content);
 
         return $content;
     }
