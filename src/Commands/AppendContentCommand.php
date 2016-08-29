@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 
-abstract class ReplaceContentCommand extends InstallCommand
+abstract class AppendContentCommand extends InstallCommand
 {
     use CanReplaceKeywords;
 
