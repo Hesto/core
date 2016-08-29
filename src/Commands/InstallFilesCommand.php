@@ -2,17 +2,14 @@
 
 namespace Hesto\Core\Commands;
 
-use Hesto\Core\Traits\CanReplaceKeywords;
 use Illuminate\Filesystem\Filesystem;
 use SplFileInfo;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 
-abstract class InstallFilesCommand extends InstallCommand
+abstract class InstallFilesCommand extends InstallAndReplaceCommand
 {
-    use CanReplaceKeywords;
-
     /**
      * The filesystem instance.
      *
@@ -62,57 +59,5 @@ abstract class InstallFilesCommand extends InstallCommand
         }
 
         return true;
-    }
-
-    /**
-     * Compile content.
-     *
-     * @param $content
-     * @return mixed
-     */
-    protected function compile($content)
-    {
-        $content = $this->replaceNames($content);
-
-        return $content;
-    }
-
-    protected function getInfoMessage($filePath)
-    {
-        return $this->info('Content changed in: ' . $filePath);
-    }
-
-    /**
-     * Get the desired class name from the input.
-     *
-     * @return string
-     */
-    protected function getNameInput()
-    {
-        return trim($this->argument('name'));
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    public function getArguments()
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'The name of the class'],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [
-            ['force', 'f', InputOption::VALUE_NONE, 'Force override existing files'],
-        ];
     }
 }
