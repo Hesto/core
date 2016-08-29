@@ -33,8 +33,11 @@ trait CanReplaceKeywords
             snake_case($name),
         ];
 
+
+
         $template = str_replace($plural, $replace, $template);
         $template = str_replace($singular, $replace, $template);
+        $template = str_replace('{{Class}}', ucfirst(camel_case($name)), $template);
 
         return $template;
     }
