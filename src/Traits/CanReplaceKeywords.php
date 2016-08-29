@@ -11,7 +11,7 @@ trait CanReplaceKeywords
      * @param $stub
      * @return $this
      */
-    public function replaceNames(&$template)
+    public function replaceNames($template)
     {
         $name = $this->getNameInput();
 
@@ -36,6 +36,6 @@ trait CanReplaceKeywords
         $template = str_replace($plural, $replace, $template);
         $template = str_replace($singular, $replace, $template);
 
-        return $this;
+        return $template;
     }
 }

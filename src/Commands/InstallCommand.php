@@ -174,7 +174,7 @@ abstract class InstallCommand extends Command
      *
      * @return array
      */
-    protected function getOptions()
+    public function getOptions()
     {
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Force override existing files'],
