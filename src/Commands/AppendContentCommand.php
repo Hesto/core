@@ -62,22 +62,21 @@ abstract class AppendContentCommand extends InstallAndReplaceCommand
     /**
      * Compile content.
      *
-     * @param $content
+     * @param $path
+     * @param $setting
      * @return mixed
      */
     protected function compileContent($path, $setting)
     {
         $content = $this->replaceNames($this->files->get($setting['stub']));
 
-        if($setting['search']) {
-            if ($setting['prefix']) {
-                $stub = $content . $setting['search'];
-            } else {
-                $stub = $setting['search'] . $content;
-            }
-
-            $content = str_replace($setting['search'], $stub, $this->files->get($path));
+        if ($setting['prefix']) {
+            $stub = $content . $setting['search'];
+        } else {
+            $stub = $setting['search'] . $content;
         }
+
+        $content = str_replace($setting['search'], $stub, $this->files->get($path));
 
         return $content;
     }
