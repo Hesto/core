@@ -71,7 +71,11 @@ abstract class AppendContentCommand extends InstallCommand
     {
         $string = $this->replaceNames($this->files->get($file['append']));
 
-        $stub = $file['search'] . $string;
+        if($file['prefix']) {
+            $stub = $string . $file['search'];
+        } else {
+            $stub = $file['search'] . $string;
+        }
 
         $content = str_replace($file['search'], $stub, $this->files->get($path));
 
