@@ -53,7 +53,7 @@ abstract class ReplaceContentCommand extends InstallCommand
             $path = $file['path'];
             $fullPath = base_path() . $path;
 
-            if($this->putContent($path, $this->compileContent($path, $file))) {
+            if($this->putContent($fullPath, $this->compileContent($fullPath, $file))) {
                 $this->getInfoMessage($fullPath);
             }
         }
@@ -67,13 +67,13 @@ abstract class ReplaceContentCommand extends InstallCommand
      * @param $content
      * @return mixed
      */
-    protected function compileContent($content, $file)
+    protected function compileContent($path, $file)
     {
-        $string = $this->replaceNames($this->files->get($file['replace']));
+        $string = $this->replaceNames($this->files->get($file['append']));
 
         $stub = $file['search'] . $string;
 
-        $content = str_replace($file['search'], $stub, $content);
+        $content = str_replace($file['search'], $stub, $this->files->get($path));
 
         return $content;
     }
