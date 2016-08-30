@@ -47,9 +47,25 @@ abstract class InstallAndReplaceCommand extends InstallCommand
         return $content;
     }
 
+    /**
+     * Get info message output
+     *
+     * @param $filePath
+     * @return mixed
+     */
     protected function getInfoMessage($filePath)
     {
         return $this->info('Content changed in: ' . $filePath);
+    }
+
+    /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getParsedNameInput()
+    {
+        return mb_strtolower(str_singular($this->getNameInput()));
     }
 
     /**
