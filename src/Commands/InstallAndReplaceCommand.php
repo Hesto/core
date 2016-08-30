@@ -73,4 +73,23 @@ abstract class InstallAndReplaceCommand extends InstallCommand
             ['name', InputArgument::REQUIRED, 'The name of the class'],
         ];
     }
+
+    /**
+     * Check if stub's content exists in given file (path)
+     *
+     * @param $path
+     * @param $stub
+     * @return bool
+     */
+    public function contentExists($path, $stub)
+    {
+        $originalContent = $this->files->get($path);
+        $content = $this->replaceNames($this->files->get($stub));
+
+        if(str_contains(trim($originalContent), trim($content))) {
+            return true;
+        }
+
+        return false;
+    }
 }
