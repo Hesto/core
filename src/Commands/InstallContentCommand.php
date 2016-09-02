@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
 
-abstract class AppendContentCommand extends InstallAndReplaceCommand
+abstract class InstallContentCommand extends InstallCommand
 {
     /**
      * The filesystem instance.
@@ -31,9 +31,9 @@ abstract class AppendContentCommand extends InstallAndReplaceCommand
     protected $description;
 
     /**
-     * Get settings array.
+     * Get the destination path.
      *
-     * @return array
+     * @return string
      */
     abstract function getSettings();
 
@@ -66,10 +66,10 @@ abstract class AppendContentCommand extends InstallAndReplaceCommand
      * @param $setting
      * @return mixed
      */
-    protected function compileContent($path, $setting) //It should be compile method instead
+    protected function compileContent($path, $setting)
     {
         $originalContent = $this->files->get($path);
-        $content = $this->replaceNames($this->files->get($setting['stub']));
+        $content = $this->files->get($setting['stub']);
 
         if( ! str_contains(trim($originalContent), trim($content))) {
 
