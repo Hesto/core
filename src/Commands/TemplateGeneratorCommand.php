@@ -6,7 +6,7 @@ use Hesto\Core\Traits\CanReplaceKeywords;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-abstract class TemplateGeneratorCommand extends InstallCommand
+abstract class TemplateGeneratorCommand extends InstallAndReplaceCommand
 {
     use CanReplaceKeywords;
 
@@ -72,19 +72,16 @@ abstract class TemplateGeneratorCommand extends InstallCommand
     /**
      * Get the desired template.
      *
-     * @param $template
-     * @return string
+     * @return array|string
      */
     public function getTemplate() {
-        $templateDir = __DIR__ . '/../stubs/';
+        $templatesPath = __DIR__ . '/../stubs/' . $this->parseTypeName() . '/';
 
         if($this->option('custom')) {
-            $templateDir = $this->option('path');
+            $templatesPath = $this->option('path');
         }
 
-        $templatesPath = $templateDir . $this->parseTypeName() .'/';
-
-        return $templatesPath . $this->getTemplateInput() . '.stub';
+        return $templatesPath . $this->getTemplateInput() . '/';
     }
 
     /**
@@ -108,42 +105,6 @@ abstract class TemplateGeneratorCommand extends InstallCommand
     }
 
     /**
-     * Get the desired class name from the input.
-     *
-     * @return string
-     */
-    protected function getNameInput()
-    {
-        return trim($this->argument('name'));
-    }
-
-    /**
-     * Compile the template.
-     *
-     * @param $template
-     * @return string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     */
-    public function compile($template)
-    {
-        $this->replaceNames($template);
-
-        return $template;
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    public function getArguments()
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'The name of the class'],
-        ];
-    }
-
-    /**
      * Get the console command options.
      *
      * @return array
@@ -152,6 +113,7 @@ abstract class TemplateGeneratorCommand extends InstallCommand
     {
         return [
             ['template', 't', InputOption::VALUE_OPTIONAL, 'The template to generate', 'default'],
+            ['layout', 'l', InputOption::VALUE_OPTIONAL, 'To which layout generate the template?', 'admin'],
             ['custom', 'c', InputOption::VALUE_OPTIONAL, 'Use custom templates instead of given ones', false],
             ['path', 'p', InputOption::VALUE_OPTIONAL, 'Local path for template stubs', '/resources/templates/'],
             ['force', 'f', InputOption::VALUE_NONE, 'Force override existing files'],
