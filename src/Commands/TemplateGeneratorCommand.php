@@ -46,6 +46,11 @@ abstract class TemplateGeneratorCommand extends InstallAndReplaceCommand
     abstract function getPath();
 
     /**
+     * @return mixed
+     */
+    abstract function getTemplatePath();
+
+    /**
      * Execute the console command.
      *
      * @return bool|null
@@ -75,13 +80,13 @@ abstract class TemplateGeneratorCommand extends InstallAndReplaceCommand
      * @return array|string
      */
     public function getTemplate() {
-        $templatesPath = __DIR__ . '/../stubs/' . $this->parseTypeName() . '/';
+        $templatesPath = $this->getTemplatePath();
 
         if($this->option('custom')) {
             $templatesPath = $this->option('path');
         }
 
-        return $templatesPath . $this->getTemplateInput() . '/';
+        return $templatesPath . $this->getTemplateInput() . "/";
     }
 
     /**
