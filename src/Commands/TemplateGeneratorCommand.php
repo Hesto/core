@@ -59,7 +59,7 @@ abstract class TemplateGeneratorCommand extends InstallAndReplaceCommand
     {
         $path = $this->getPath();
 
-        if($this->files->isDirectory($this->getTemplate())) {
+        if($this->files->isDirectory($this->getTemplatePath())) {
             $this->installFiles($path, $this->files->allFiles($this->getTemplate()));
 
             return true;
