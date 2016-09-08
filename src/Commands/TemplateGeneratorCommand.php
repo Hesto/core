@@ -65,7 +65,7 @@ abstract class TemplateGeneratorCommand extends InstallAndReplaceCommand
             return true;
         }
 
-        $template = new \SplFileInfo($this->getTemplate());
+        $template = new \SplFileInfo($this->getTemplatePath());
 
         if($this->putFile(base_path() . $path, $template)) {
             $this->info($this->type . ' template created successfully!');
