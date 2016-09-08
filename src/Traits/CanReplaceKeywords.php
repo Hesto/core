@@ -13,7 +13,7 @@ trait CanReplaceKeywords
      */
     public function replaceNames($template)
     {
-        $name = $this->getNameInput();
+        $name = $this->getParsedNameInput();
 
         $name = str_plural($name);
 

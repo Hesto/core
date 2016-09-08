@@ -8,8 +8,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 abstract class TemplateGeneratorCommand extends InstallAndReplaceCommand
 {
-    use CanReplaceKeywords;
-
     /**
      * The filesystem instance.
      *
