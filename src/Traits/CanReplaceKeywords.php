@@ -15,7 +15,7 @@ trait CanReplaceKeywords
     {
         $name = $this->getParsedNameInput();
 
-        $name = str_plural($name);
+        $name = snake_case(camel_case(str_plural($name)));
 
         $plural = [
             '{{pluralCamel}}',
