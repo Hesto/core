@@ -43,7 +43,7 @@ abstract class InstallFilesCommand extends InstallAndReplaceCommand
      *
      * @return bool|null
      */
-    public function fire()
+    public function handle()
     {
         $files = $this->getFiles();
 

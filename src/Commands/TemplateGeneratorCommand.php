@@ -53,7 +53,7 @@ abstract class TemplateGeneratorCommand extends InstallAndReplaceCommand
      *
      * @return bool|null
      */
-    public function fire()
+    public function handle()
     {
         $path = $this->getPath();
 
