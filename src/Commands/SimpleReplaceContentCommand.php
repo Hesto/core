@@ -42,7 +42,7 @@ abstract class SimpleReplaceContentCommand extends InstallCommand
      *
      * @return bool|null
      */
-    public function fire()
+    public function handle()
     {
         $settings = $this->getSettings();
 

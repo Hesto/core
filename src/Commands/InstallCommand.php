@@ -48,7 +48,7 @@ abstract class InstallCommand extends Command
      *
      * @return bool|null
      */
-    abstract function fire();
+    abstract function handle();
 
     /**
      * Install files method.

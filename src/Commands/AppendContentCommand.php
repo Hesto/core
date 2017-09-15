@@ -42,7 +42,7 @@ abstract class AppendContentCommand extends InstallAndReplaceCommand
      *
      * @return bool|null
      */
-    public function fire()
+    public function handle()
     {
         $settings = $this->getSettings();
 
