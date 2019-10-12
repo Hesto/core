@@ -3,6 +3,7 @@
 namespace Hesto\Core\Commands;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -53,7 +54,6 @@ abstract class AppendContentCommand extends InstallAndReplaceCommand
             if ($this->putContent($fullPath, $this->compileContent($fullPath, $setting))) {
                 $this->getInfoMessage($fullPath);
             }
-
         }
 
         return true;
@@ -71,7 +71,7 @@ abstract class AppendContentCommand extends InstallAndReplaceCommand
         $originalContent = $this->files->get($path);
         $content = $this->replaceNames($this->files->get($setting['stub']));
 
-        if( ! str_contains(trim($originalContent), trim($content))) {
+        if (!Str::contains(trim($originalContent), trim($content))) {
 
             if ($setting['prefix']) {
                 $stub = $content . $setting['search'];
