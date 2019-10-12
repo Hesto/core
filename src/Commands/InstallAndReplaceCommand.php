@@ -4,6 +4,7 @@ namespace Hesto\Core\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Hesto\Core\Traits\CanReplaceKeywords;
@@ -102,7 +103,7 @@ abstract class InstallAndReplaceCommand extends InstallCommand
         $originalContent = $this->files->get($path);
         $content = $this->replaceNames($this->files->get($stub));
 
-        if(str_contains(trim($originalContent), trim($content))) {
+        if (Str::contains(trim($originalContent), trim($content))) {
             return true;
         }
 
